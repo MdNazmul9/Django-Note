@@ -16,5 +16,6 @@ User.objects.filter(is_superuser=True)
 usr = User.objects.get(username='your username')
 usr.set_password('raw password')
 usr.save()
+
 # and you set a new password (:
 ```
