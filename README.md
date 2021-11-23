@@ -46,6 +46,7 @@ $ ``` python manage.py changepassword admin```
         
    ```
    # Custom Permissions
+   step 1:
    ```
    # models.py
    class Book(models.Model):
@@ -63,4 +64,22 @@ $ ``` python manage.py changepassword admin```
           ('special_status', 'Can read all books'),
           ]
 
+   ```
+   step 2:
+   ```
+   from django.contrib.auth.mixins import (
+      LoginRequiredMixin,
+      PermissionRequiredMixin # new
+      )
+    from django.views.generic import ListView, DetailView
+    from .models import Book
+    
+    
+    class BookDetailView(LoginRequiredMixin,PermissionRequiredMixin,DetailView):
+      model = Book
+      context_object_name = 'book'
+      template_name = 'books/book_detail.html'
+      login_url = 'account_login'
+      permission_required = 'books.special_status' # new
+    
    ```
